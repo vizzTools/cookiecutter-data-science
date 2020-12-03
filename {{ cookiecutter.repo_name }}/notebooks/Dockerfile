@@ -64,7 +64,9 @@ RUN jupyter contrib nbextension install --sys-prefix && \
                 jupyter nbextension enable vega --py --sys-prefix &&  \
                 jupyter nbextension enable --py --sys-prefix ipyleaflet && \
                 jupyter labextension install @jupyter-widgets/jupyterlab-manager dask-labextension@2.0.2 && \
-                labextension install jupyterlab_templates &&\
+                jupyter nbextension install --py jupytemplate --sys-prefix && \
+                jupyter nbextension enable jupytemplate/main --sys-prefix &&\
+                jupyter labextension install jupyterlab_templates &&\
                 jupyter serverextension enable --py jupyterlab_templates
 
 # Add requirements file
