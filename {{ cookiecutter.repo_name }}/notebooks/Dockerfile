@@ -42,7 +42,7 @@ RUN pip install jupyter_contrib_nbextensions \
                 nbdime \
                 vega \
                 ipyleaflet \
-                jupytemplate
+                jupyterlab_templates
 # Having to install gdal through conda gaves me chills; trying installing it through pip is failing badly. no time to dig depply on what is going on probably issues with path.
 RUN conda update -n base conda && conda install -c conda-forge \
             python-blosc \
@@ -64,8 +64,8 @@ RUN jupyter contrib nbextension install --sys-prefix && \
                 jupyter nbextension enable vega --py --sys-prefix &&  \
                 jupyter nbextension enable --py --sys-prefix ipyleaflet && \
                 jupyter labextension install @jupyter-widgets/jupyterlab-manager dask-labextension@2.0.2 && \
-                jupyter nbextension install --py jupytemplate --sys-prefix && \
-                jupyter nbextension enable jupytemplate/main --sys-prefix
+                labextension install jupyterlab_templates &&\
+                jupyter serverextension enable --py jupyterlab_templates
 
 # Add requirements file
 COPY jupyter_notebook_config.py /etc/jupyter/
