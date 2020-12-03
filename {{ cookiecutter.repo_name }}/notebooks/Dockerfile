@@ -28,12 +28,11 @@ RUN apt-get update && \
     nvm install --lts --latest-npm \
     && npm install @mapbox/mapbox-gl-style-spec --global
 
-Run git clone https://github.com/mapbox/tippecanoe.git && \
+RUN git clone https://github.com/mapbox/tippecanoe.git && \
 	cd tippecanoe && \
 	make -j && make install && cd ..
 RUN export CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
-# Having to install gdal through conda gaves me chills; trying installing it through pip is failing badly. no time to dig depply on what is going on probably issues with path.
-RUN conda update -n base conda && conda install -c conda-forge python-blosc cytoolz gdal dask==2.30 xhistogram lz4 nomkl dask-labextension==3.0 python-graphviz tini==0.18.0 xarray=0.16.1
+
 RUN pip install jupyter_contrib_nbextensions \
                 jupyter_nbextensions_configurator \
                 version_information \
@@ -42,7 +41,21 @@ RUN pip install jupyter_contrib_nbextensions \
                 autopep8 \
                 nbdime \
                 vega \
-                ipyleaflet
+                ipyleaflet \
+                jupytemplate
+# Having to install gdal through conda gaves me chills; trying installing it through pip is failing badly. no time to dig depply on what is going on probably issues with path.
+RUN conda update -n base conda && conda install -c conda-forge \
+            python-blosc \
+            cytoolz \
+            gdal \
+            dask==2.30 \
+            xhistogram \
+            lz4 \
+            nomkl \
+            dask-labextension==3.0 \
+            python-graphviz \
+            tini==0.18.0 \
+            xarray=0.16.1
 
 # Enable extensions
 RUN jupyter contrib nbextension install --sys-prefix && \
@@ -55,13 +68,9 @@ RUN jupyter contrib nbextension install --sys-prefix && \
                 jupyter nbextension enable jupytemplate/main --sys-prefix
 
 # Add requirements file
+COPY jupyter_notebook_config.py /etc/jupyter/
 COPY requirements.txt /app/
 RUN pip install wheel -r /app/requirements.txt
-
-
-
-COPY jupyter_notebook_config.py /etc/jupyter/
 RUN mkdir /opt/app
-
 # Jupyter with Docker Compose
 EXPOSE 8888
