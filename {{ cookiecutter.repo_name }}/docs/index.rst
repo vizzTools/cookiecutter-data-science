@@ -13,7 +13,9 @@ Contents:
 
    getting-started
    commands
+   adr/instructions
 
+   module
 
 
 Indices and tables
