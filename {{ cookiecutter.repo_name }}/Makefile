@@ -24,8 +24,11 @@ up:
 	docker-compose build && docker-compose up
 {% if cookiecutter.module == 'y' %}
 inside:
-	docker exec -it {{cookiecutter.repo_name}}_4000
+	docker exec -it {{cookiecutter.repo_name}}_4000 bash
 {% endif %}
+
+serve-doc:
+	docker exec -it {{cookiecutter.repo_name}}_4000 bash sphinx-autobuild docs docs/_build/html
 
 ## Install Python Dependencies
 requirements: test_environment

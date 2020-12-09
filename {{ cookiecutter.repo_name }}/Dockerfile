@@ -9,3 +9,4 @@ RUN mkdir projects
 COPY . projects/{{cookiecutter.repo_name}}
 RUN pip install wheel -r projects/{{cookiecutter.repo_name}}/requirements.txt
 RUN cd projects/{{cookiecutter.repo_name}} {% if cookiecutter.module == 'y' %} && pip install -e .{% endif %}
+WORKDIR /home/${HOST_USER}/projects/{{cookiecutter.repo_name}}

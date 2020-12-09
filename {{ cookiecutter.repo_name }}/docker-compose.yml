@@ -46,6 +46,8 @@ services:
     # add UID to allow multiple users run this in parallel
     container_name: {{cookiecutter.repo_name}}_4000
     hostname: {{cookiecutter.repo_name}}
+    ports:
+        - 8000:8000
     # These variables are passed into the container.
     environment:
         - UID=4000
