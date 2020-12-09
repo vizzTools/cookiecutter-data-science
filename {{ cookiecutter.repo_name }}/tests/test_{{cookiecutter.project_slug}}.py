@@ -4,15 +4,13 @@
 """Tests for `{{ cookiecutter.project_slug }}` package."""
 
 import pytest
-
-{%- if cookiecutter.command_line_interface|lower == 'click' %}
+{% if cookiecutter.command_line_interface|lower == 'click' %}
 from click.testing import CliRunner
-{%- endif %}
-
+{% endif %}
 from {{ cookiecutter.project_slug }} import {{ cookiecutter.project_slug }} # noqa
-{%- if cookiecutter.command_line_interface|lower == 'click' %}
+{% if cookiecutter.command_line_interface|lower == 'click' %}
 from {{ cookiecutter.project_slug }} import cli
-{%- endif %}
+{% endif %}
 
 
 @pytest.fixture
