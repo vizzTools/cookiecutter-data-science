@@ -28,7 +28,7 @@ inside:
 {% endif %}
 
 serve-doc:
-	docker exec -it {{cookiecutter.repo_name}}_4000 bash sphinx-autobuild docs docs/_build/html
+	docker exec -it {{cookiecutter.repo_name}}_4000 sphinx-autobuild docs ./docs/_build/html --host 0.0.0.0 --port 8000
 
 ## Install Python Dependencies
 requirements: test_environment
