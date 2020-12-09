@@ -7,11 +7,14 @@
 # configuration requirements
 click
 Sphinx
+tox
 watchdog>=0.8.3
 sphinx-rtd-theme>=0.4.3
 recommonmark>=0.6.0
 flake8
 yapf
+coverage
+report
 pytest
 pytest-flakes
 pytest-cov
