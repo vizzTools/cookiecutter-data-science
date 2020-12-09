@@ -35,7 +35,6 @@ extensions = [
             'sphinx.ext.imgmath',
             'sphinx.ext.ifconfig',
             'sphinx.ext.viewcode',
-            'docs.ccext',
             'recommonmark'
             ]
 
