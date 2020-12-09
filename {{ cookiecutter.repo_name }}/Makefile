@@ -19,13 +19,13 @@ endif
 # COMMANDS                                                                      #
 #################################################################################
 ## Initiate Docker compose and build services:
-.PHONY: up
+.PHONY: up inside
 up:
 	docker-compose build && docker-compose up
-
+{% if cookiecutter.module == 'y' %}
 inside:
-	docker exec -it mgis-postgres
-
+	docker exec -it {{cookiecutter.repo_name}}_4000
+{% endif %}
 
 ## Install Python Dependencies
 requirements: test_environment
@@ -43,7 +43,7 @@ clean:
 
 ## Lint using flake8
 lint:
-	yapf {{ cookiecutter.project_slug }} && flake8 {{ cookiecutter.project_slug }}
+	yapf --recursive {{ cookiecutter.project_slug }} && flake8 {{ cookiecutter.project_slug }}
 
 ## Upload Data to S3
 sync_data_to_s3:
@@ -84,7 +84,7 @@ test_environment:
 	python3 test_environment.py
 
 test:
-	py.test tests
+	tox
 #################################################################################
 # PROJECT RULES                                                                 #
 #################################################################################

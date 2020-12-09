@@ -1,5 +1,6 @@
 import logging
 
+
 class CustomFormatter(logging.Formatter):
     """Logging Formatter to add colors and count warning / errors"""
     cyan = "\x1b[36;21m"
@@ -8,7 +9,8 @@ class CustomFormatter(logging.Formatter):
     red = "\x1b[31;21m"
     bold_red = "\x1b[31;1m"
     reset = "\x1b[0m"
-    format = "{color}\x1B[1m[%(levelname)s]\x1b[0m %(asctime)s - \x1b[4m(%(filename)s:%(lineno)d)\x1b[0m %(name)s:\x1B[7m%(message)s\x1b[0m"
+    format = "{color}\x1B[1m[%(levelname)s]\x1b[0m %(asctime)s - \x1b[4m(%(filename)s:\
+            %(lineno)d)\x1b[0m %(name)s:\x1B[7m%(message)s\x1b[0m"
 
     FORMATS = {
         logging.DEBUG: format.format(color=cyan),
@@ -23,12 +25,13 @@ class CustomFormatter(logging.Formatter):
         formatter = logging.Formatter(log_fmt)
         return formatter.format(record)
 
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 # create console handler with a higher log level
 ch = logging.StreamHandler()
-#ch = logging.NullHandler()
+# ch = logging.NullHandler()
 ch.setLevel(logging.DEBUG)
 
 ch.setFormatter(CustomFormatter())
