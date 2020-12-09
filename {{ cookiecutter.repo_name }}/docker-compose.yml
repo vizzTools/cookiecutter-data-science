@@ -41,7 +41,7 @@ services:
       #  - "mymachine:<your_ip>"
 {% endif %}
 {% if cookiecutter.module == 'y' %}
-  {{cookiecutter.repo_name}}:
+  {{ cookiecutter.repo_name }}:
     # Makefile fills PROJECT_NAME to current directory name.
     # add UID to allow multiple users run this in parallel
     container_name: {{cookiecutter.repo_name}}_4000
