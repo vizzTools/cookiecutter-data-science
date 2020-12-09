@@ -43,7 +43,7 @@ clean:
 
 ## Lint using flake8
 lint:
-	flake8 src
+	yapf {{ cookiecutter.project_slug }} && flake8 {{ cookiecutter.project_slug }}
 
 ## Upload Data to S3
 sync_data_to_s3:
