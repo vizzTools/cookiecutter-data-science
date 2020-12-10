@@ -1,4 +1,4 @@
 # Instructions
 
 * Duplicate [template](template.md) <!-- optional -->
-* fill in
+* fill in whenever a new architectural decision is made.
