@@ -53,6 +53,6 @@ if 'NB_UMASK' in os.environ:
 
 
 #make template directory
-c.JupyterLabTemplates.template_dirs = ['./templates']
+c.JupyterLabTemplates.template_dirs = ['/home/jovyan/work/notebooks/templates']
 c.JupyterLabTemplates.include_default = True
 c.JupyterLabTemplates.include_core_paths = True
