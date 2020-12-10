@@ -6,7 +6,7 @@
 
 # configuration requirements
 click>=7.1.2
-Sphinx>=4.0.0
+Sphinx>=3.3.1
 tox>=3.20.1
 watchdog>=0.8.3
 sphinx-rtd-theme>=0.4.3
