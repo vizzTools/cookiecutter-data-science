@@ -1,4 +1,4 @@
-.PHONY: clean data lint requirements sync_data_to_s3 sync_data_from_s3
+.PHONY: clean data lint requirements sync_data_to_s3 sync_data_from_s3 up inside
 
 #################################################################################
 # GLOBALS                                                                       #
@@ -19,34 +19,45 @@ endif
 # COMMANDS                                                                      #
 #################################################################################
 ## Initiate Docker compose and build services:
-.PHONY: up inside
 up:
 	docker-compose build && docker-compose up
 {% if cookiecutter.module == 'y' %}
+## Get inside the main container
 inside:
 	docker exec -it {{cookiecutter.repo_name}}_4000 bash
-{% endif %}
 
+## Serve the sphinx documentation on 0.0.0.0:8000
 serve-doc:
 	docker exec -it {{cookiecutter.repo_name}}_4000 sphinx-autobuild docs ./docs/_build/html --host 0.0.0.0 --port 8000
+{% endif %}
+## init the folder as a github repository https://kbroman.org/github_tutorial/pages/init.html
+init-git:
+	git init && git remote add origin git@github.com:Vizzuality/{{cookiecutter.repo_name}}
 
-## Install Python Dependencies
+## init the github hooks set up https://pre-commit.com/
+init-prehooks:
+	pre-commit install
+
+## autoformat your code with yapf and then lint it using flake8
+lint:
+	yapf --recursive {{ cookiecutter.project_slug }} && flake8 {{ cookiecutter.project_slug }}
+
+## Run your code tests using tox
+test:
+	tox
+## Install Python Dependencies in your local if you dont want to use docker
 requirements: test_environment
 	python3 -m pip install -U pip setuptools wheel
 	python3 -m pip install -r requirements.txt
 
-## Make Dataset
-data: requirements
-	python3 src/data/make_dataset.py data/raw data/processed
+# ## Make Dataset
+# data: requirements
+# 	python3 src/data/make_dataset.py data/raw data/processed
 
 ## Delete all compiled Python files
 clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
-
-## Lint using flake8
-lint:
-	yapf --recursive {{ cookiecutter.project_slug }} && flake8 {{ cookiecutter.project_slug }}
 
 ## Upload Data to S3
 sync_data_to_s3:
@@ -86,8 +97,6 @@ endif
 test_environment:
 	python3 test_environment.py
 
-test:
-	tox
 #################################################################################
 # PROJECT RULES                                                                 #
 #################################################################################

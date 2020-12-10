@@ -31,6 +31,3 @@ if __name__ == '__main__':
 
     if 'n' == '{{ cookiecutter.airflow_setup|lower }}':
         remove_dir('airflow_setup')
-
-    if 'n' == '{{ cookiecutter.cloud_functions|lower }}':
-        remove_dir('cloud_functions')
