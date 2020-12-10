@@ -100,9 +100,9 @@ class TestCookieSetup(object):
         abs_dirs, _, _ = list(zip(*os.walk(self.path)))
         assert len(set(abs_expected_dirs + ignored_dirs) - set(abs_dirs)) == 0
 
-    # def test_bake_and_run_tests(cookies):
+    # def test_bake_and_run_tests(self):
     #     self.path
-    #     assert result.project.isdir()
-    #     run_inside_dir('python setup.py test', str(result.project)) == 0
+    #     assert self.path.isdir()
+    #     run_inside_dir('tox', str(self.path)) == 0
     #     print("test_bake_and_run_tests path", str(result.project))
 
