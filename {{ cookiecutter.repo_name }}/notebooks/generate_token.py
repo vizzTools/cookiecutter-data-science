@@ -5,7 +5,8 @@ if __name__ == "__main__":
     print("Generate a access token")
     from argparse import ArgumentParser
     parser = ArgumentParser()
-    parser.add_argument("-p",
+    parser.add_argument(
+        "-p",
         "--password",
         dest="password",
         help="The password you want to use for authentication.",

@@ -12,6 +12,5 @@
     "notebooks":"y",
     "module": "n",
     "airflow_setup": "n",
-    "cloud_functions":"n",
     "command_line_interface": [ "No command-line interface", "Click"]
 }

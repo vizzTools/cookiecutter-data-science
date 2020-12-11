@@ -7,10 +7,10 @@ from cookiecutter import main
 CCDS_ROOT = Path(__file__).parents[1].resolve()
 
 args = {
-        'project_name': 'DrivenData',
-        'author_name': 'DrivenData',
-        'open_source_license': 'ISC license'
-        }
+    'project_name': 'DrivenData',
+    'author_name': 'DrivenData',
+    'open_source_license': 'ISC license'
+}
 
 
 def system_check(basename):
@@ -26,12 +26,10 @@ def default_baked_project(tmpdir_factory, request):
     out_dir = Path(temp).resolve()
 
     pytest.param = request.param
-    main.cookiecutter(
-        str(CCDS_ROOT),
-        no_input=True,
-        extra_context=pytest.param,
-        output_dir=out_dir
-    )
+    main.cookiecutter(str(CCDS_ROOT),
+                      no_input=True,
+                      extra_context=pytest.param,
+                      output_dir=out_dir)
 
     pn = pytest.param.get('project_name') or 'project_name'
 
