@@ -35,7 +35,7 @@ init-git:
 	git init && git remote add origin git@github.com:Vizzuality/{{cookiecutter.repo_name}}
 
 ## init the github hooks set up https://pre-commit.com/ and test them.
-init-prehooks:
+init-prehooks: init-git
 	pre-commit install && pre-commit run --all-files
 
 ## autoformat your code with yapf and then lint it using flake8

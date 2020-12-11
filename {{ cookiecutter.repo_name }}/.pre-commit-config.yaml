@@ -5,11 +5,12 @@ repos:
         -   id: check-yaml
         -   id: end-of-file-fixer
         -   id: trailing-whitespace
-    - repo: meta
-        hooks:
-          - id: check-hooks-apply
-          - id: check-useless-excludes
+    # - repo: meta
+    #     hooks:
+    #       - id: check-hooks-apply
+    #       - id: check-useless-excludes
     -   repo: https://github.com/pre-commit/mirrors-yapf
+        rev: ''
         hooks:
             - id: yapf
               language: python
