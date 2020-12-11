@@ -286,6 +286,8 @@ If you use the Cookiecutter Data Science project, link back to this page or [giv
 ## Links to related projects and references
 
 Project structure and reproducibility is talked about more in the R research community. Here are some projects and blog posts if you're working in R that may help you out.
+
+
  - [cookiecutter-data-science](https://github.com/drivendata/cookiecutter-data-science) as the base for this template.
  - [Project Template](http://projecttemplate.net/index.html) - An R data analysis template
  - "[Designing projects](http://nicercode.github.io/blog/2013-04-05-projects/)" on Nice R Code
