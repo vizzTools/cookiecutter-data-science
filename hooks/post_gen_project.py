@@ -33,4 +33,4 @@ if __name__ == '__main__':
         remove_file('Dockerfile')
 
     if 'n' == '{{ cookiecutter.airflow_setup|lower }}':
-        remove_dir('airflow_setup')
+        remove_dir('airflow')
