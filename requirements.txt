@@ -2,3 +2,6 @@ mkdocs
 mkdocs-cinder
 cookiecutter
 pytest
+pre-commit
+flake8
+yapf

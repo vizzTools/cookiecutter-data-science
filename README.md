@@ -95,6 +95,8 @@ We welcome contributions! [See the docs for guidelines](https://vizzTools.github
 ------------
 
     pip install -r requirements.txt
+or
+    pip3 install -r requirements.txt
 
 ### Running the tests
 ------------
