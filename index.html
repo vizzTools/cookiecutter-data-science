@@ -103,7 +103,7 @@
         
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="first-level active"><a href="#cookiecutter-data-science">Cookiecutter Data Science</a></li>
+        <li class="first-level active"><a href="#cookiecutter-data-science-for-vizzuality">Cookiecutter Data Science for vizzuality</a></li>
             <li class="second-level"><a href="#why-use-this-project-structure">Why use this project structure?</a></li>
                 
                 <li class="third-level"><a href="#other-people-will-thank-you">Other people will thank you</a></li>
@@ -116,6 +116,9 @@
                 <li class="third-level"><a href="#example">Example</a></li>
             <li class="second-level"><a href="#directory-structure">Directory structure</a></li>
                 
+                <li class="third-level"><a href="#first-setup-one-of-your-environments">First, setup one of your environments</a></li>
+                <li class="third-level"><a href="#second-init-git-and-initialize-the-github-pre-hooks">Second, Init git and initialize the github pre-hooks</a></li>
+                <li class="third-level"><a href="#happy-coding-and-science">Happy coding and science!</a></li>
             <li class="second-level"><a href="#opinions">Opinions</a></li>
                 
                 <li class="third-level"><a href="#data-is-immutable">Data is immutable</a></li>
@@ -132,7 +135,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="cookiecutter-data-science">Cookiecutter Data Science</h1>
+<h1 id="cookiecutter-data-science-for-vizzuality">Cookiecutter Data Science for vizzuality</h1>
 <p><em>A logical, reasonably standardized, but flexible project structure for doing and sharing data science work.</em></p>
 <h2 id="why-use-this-project-structure">Why use this project structure?</h2>
 <blockquote>
@@ -187,50 +190,89 @@
 <h3 id="example">Example</h3>
 <p><a href="https://asciinema.org/a/244658"><img alt="asciicast" src="https://asciinema.org/a/244658.svg" /></a></p>
 <h2 id="directory-structure">Directory structure</h2>
-<pre><code class="language-nohighlight">├── LICENSE
-├── Makefile           &lt;- Makefile with commands like `make data` or `make train`
-├── README.md          &lt;- The top-level README for developers using this project.
+<pre><code class="language-nohighlight">├── LICENSE                 &lt;- The LICENSE using this project.
+├── README.md               &lt;- The top-level README for developers using this project.
+├── CHANGELOG.md            &lt;- The top-level CHANGELOG for developers using this project.
+├── env.default             &lt;- Environment vars definition
+├── Makefile                &lt;- Makefile with commands
+├──.editorconfig            &lt;- Helps maintain consistent coding styles
+├──.pre-commit-config       &lt;- Helps setup github basic precommit hooks
+├── Dockerfile              &lt;- Docker file definition
+├── docker-compose.yml      &lt;- Docker configs environment definition
+├── .dockerignore           &lt;- files don't want to copy inside container
+├── .gitignore              &lt;- files don't want to copy in githubs
+├── .github                 &lt;- github configs
+│   └── pull_request_template.md &lt;- github pr template
+├── requirements.txt        &lt;- The requirements for development
+├── setup.cfg               &lt;- a config file for pytest, flake8 and yapf
+├── setup.py                &lt;- config file for pip module
+├── docs                    &lt;- A default Sphinx project with support for module autodoc and markdown.
+│   └── __init__.py
+├── test                    &lt;- Test setup folder using pytest, datatest and hypothesis
+│   └── __init__.py
+├── tox.ini                 &lt;- tox file with settings for running tox;
+|
 ├── data
-│   ├── external       &lt;- Data from third party sources.
-│   ├── interim        &lt;- Intermediate data that has been transformed.
-│   ├── processed      &lt;- The final, canonical data sets for modeling.
-│   └── raw            &lt;- The original, immutable data dump.
-│
-├── docs               &lt;- A default Sphinx project; see sphinx-doc.org for details
-│
-├── models             &lt;- Trained and serialized models, model predictions, or model summaries
-│
-├── notebooks          &lt;- Jupyter notebooks. Naming convention is a number (for ordering),
-│                         the creator's initials, and a short `-` delimited description, e.g.
-│                         `1.0-jqp-initial-data-exploration`.
-│
-├── references         &lt;- Data dictionaries, manuals, and all other explanatory materials.
-│
-├── reports            &lt;- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        &lt;- Generated graphics and figures to be used in reporting
-│
-├── requirements.txt   &lt;- The requirements file for reproducing the analysis environment, e.g.
-│                         generated with `pip freeze &gt; requirements.txt`
-│
-├── setup.py           &lt;- Make this project pip installable with `pip install -e`
-├── src                &lt;- Source code for use in this project.
-│   ├── __init__.py    &lt;- Makes src a Python module
+│   ├── processed           &lt;- The final, canonical data sets for modeling.
+│   └── raw                 &lt;- The original, immutable data dump.
+|
+├── notebooks               &lt;- Naming convention is a number (for ordering),
+│   │                       the creator's initials, and a short `-` delimited e.g.
+│   │                       `1.0-jqp-initial-data-exploration`.
 │   │
-│   ├── data           &lt;- Scripts to download or generate data
-│   │   └── make_dataset.py
+│   ├──.env
+│   ├──.dockerignore
+│   ├──requirements.txt           &lt;- Notebooks requirements
+│   ├──Dockerfile                 &lt;- Sets up Jupyter notebooks environment
+│   ├──jupyter_notebook_config.py &lt;- Configure Jupyter notebooks
+│   ├── template_notebooks        &lt;- where the notebooks template will live.
 │   │
-│   ├── features       &lt;- Scripts to turn raw data into features for modeling
-│   │   └── build_features.py
+│   ├── Lab                 &lt;- Testing and development
 │   │
-│   ├── models         &lt;- Scripts to train models and then use trained models to make
-│   │   │                 predictions
-│   │   ├── predict_model.py
-│   │   └── train_model.py
-│   │
-│   └── visualization  &lt;- Scripts to create exploratory and results oriented visualizations
-│       └── visualize.py
+│   └── Final               &lt;- The final cleaned notebooks for reports/ designers /
+|                              developers etc.
 │
-└── tox.ini            &lt;- tox file with settings for running tox; see tox.readthedocs.io
+├── airflowDataProject
+│   ├── processed           &lt;- The final, canonical data sets for modeling.
+│   └── raw                 &lt;- The original, immutable data dump.
+│
+└─ &lt;you project slug&gt;       &lt;- Source code for use in this project.
+    └── __init__.py         &lt;- Makes src a Python module
+</code></pre>
+<h4 id="first-setup-one-of-your-environments">First, setup one of your environments</h4>
+<ul>
+<li>With <a href="">docker</a> and <a href="">docker-compose</a> in your system, you can develop inside containers:</li>
+</ul>
+<pre><code class="language-bash">make up
+</code></pre>
+<p>And if you want to get into the main container:</p>
+<pre><code class="language-bash">make inside
+</code></pre>
+<hr />
+<ul>
+<li>Install requirements on your machine:</li>
+</ul>
+<pre><code class="language-bash">make requirements
+</code></pre>
+<ul>
+<li>Set up a new environment in your machine</li>
+</ul>
+<pre><code class="language-bash">make create_environment &amp;&amp; make requirements
+</code></pre>
+<hr />
+<h4 id="second-init-git-and-initialize-the-github-pre-hooks">Second, Init git and initialize the github pre-hooks</h4>
+<pre><code class="language-bash">make init-prehooks
+</code></pre>
+<p>By default this will treat your project remote branch as <code>git@github.com:Vizzuality/{{cookiecutter.repo_name}}</code> if you need to change it don't forget to modify the <code>Makefile</code> before running this command. Take into account that this will create a new repository under the vizzuality organization once you <code>git push -u origin master</code></p>
+<h4 id="happy-coding-and-science">Happy coding and science!</h4>
+<p>You can run your tests:</p>
+<pre><code class="language-bash">make test
+</code></pre>
+<p>You can lint and reformat your code:</p>
+<pre><code class="language-bash">make lint
+</code></pre>
+<p>or up and serve the documentation:</p>
+<pre><code class="language-bash">make serve-doc
 </code></pre>
 <h2 id="opinions">Opinions</h2>
 <p>There are some opinions implicit in the project structure that have grown out of our experience with what works and what doesn't when collaborating on data science projects. Some of the opinions are about workflows, and some of the opinions are about tools that make life easier. Here are some of the beliefs which this project is built on—if you've got thoughts, please <a href="#contributing">contribute or share them</a>.</p>
@@ -238,8 +280,8 @@
 <p>Don't ever edit your raw data, especially not manually, and especially not in Excel. Don't overwrite your raw data. Don't save multiple versions of the raw data. Treat the data (and its format) as immutable. The code you write should move the raw data through a pipeline to your final analysis. You shouldn't have to run all of the steps every time you want to make a new figure (see <a href="#analysis-is-a-dag">Analysis is a DAG</a>), but anyone should be able to reproduce the final products with only the code in <code>src</code> and the data in <code>data/raw</code>.</p>
 <p>Also, if data is immutable, it doesn't need source control in the same way that code does. Therefore, <strong><em>by default, the data folder is included in the <code>.gitignore</code> file.</em></strong> If you have a small amount of data that rarely changes, you may want to include the data in the repository. Github currently warns if files are over 50MB and rejects files over 100MB. Some other options for storing/syncing large data include <a href="https://aws.amazon.com/s3/">AWS S3</a> with a syncing tool (e.g., <a href="http://s3tools.org/s3cmd"><code>s3cmd</code></a>), <a href="https://git-lfs.github.com/">Git Large File Storage</a>, <a href="https://git-annex.branchable.com/">Git Annex</a>, and <a href="http://dat-data.com/">dat</a>. Currently by default, we ask for an S3 bucket and use <a href="http://docs.aws.amazon.com/cli/latest/reference/s3/index.html">AWS CLI</a> to sync data in the <code>data</code> folder with the server.</p>
 <h3 id="notebooks-are-for-exploration-and-communication">Notebooks are for exploration and communication</h3>
-<p>Notebook packages like the <a href="http://jupyter.org/">Jupyter notebook</a>, <a href="http://beakernotebook.com/">Beaker notebook</a>, <a href="http://zeppelin-project.org/">Zeppelin</a>, and other literate programming tools are very effective for exploratory data analysis. However, these tools can be less effective for reproducing an analysis. When we use notebooks in our work, we often subdivide the <code>notebooks</code> folder. For example, <code>notebooks/exploratory</code> contains initial explorations, whereas <code>notebooks/reports</code> is more polished work that can be exported as html to the <code>reports</code> directory.</p>
-<p>Since notebooks are challenging objects for source control (e.g., diffs of the <code>json</code> are often not human-readable and merging is near impossible), we recommended not collaborating directly with others on Jupyter notebooks. There are two steps we recommend for using notebooks effectively:</p>
+<p>Notebook packages like the <a href="http://jupyter.org/">Jupyter notebook</a>, <a href="http://beakernotebook.com/">Beaker notebook</a>, <a href="http://zeppelin-project.org/">Zeppelin</a>, and other literate programming tools are very effective for exploratory data analysis. However, these tools can be less effective for reproducing an analysis. When we use notebooks in our work, we often subdivide the <code>notebooks</code> folder. Some basic template to start from can be found at <code>notebooks/templates</code>. For example, <code>notebooks/Lab</code> contains initial explorations, whereas <code>notebooks/Final</code> is more polished work.</p>
+<p>Since notebooks are challenging objects for source control (e.g., diffs of the <code>json</code> are often not human-readable and merging is near impossible), we recommended not collaborating directly with others on Jupyter notebooks and use <a href="https://nbdime.readthedocs.io/en/latest/"><code>nbdime</code></a> to better handle github. There are also two steps we recommend for using notebooks effectively:</p>
 <ol>
 <li>
 <p>Follow a naming convention that shows the owner and the order the analysis was done in. We use the format <code>&lt;step&gt;-&lt;ghuser&gt;-&lt;description&gt;.ipynb</code> (e.g., <code>0.3-bull-visualize-distributions.ipynb</code>).</p>
@@ -255,7 +297,7 @@
 # OPTIONAL: always reload modules so that as you change code in src, it gets loaded
 %autoreload 2
 
-from src.data import make_dataset
+from &lt;project_slug&gt;.&lt;file&gt; import &lt;function&gt;
 </code></pre>
 <h3 id="analysis-is-a-dag">Analysis is a DAG</h3>
 <p>Often in an analysis you have long-running steps that preprocess data or train models. If these steps have been run already (and you have stored the output somewhere like the <code>data/interim</code> directory), you don't want to wait to rerun them every time. We prefer <a href="https://www.gnu.org/software/make/"><code>make</code></a> for managing steps that depend on each other, especially the long-running ones. Make is a common tool on Unix-based platforms (and <a href="">is available for Windows</a>). Following the <a href="https://www.gnu.org/software/make/"><code>make</code> documentation</a>, <a href="https://www.gnu.org/prep/standards/html_node/Makefile-Conventions.html#Makefile-Conventions">Makefile conventions</a>, and <a href="http://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.69/html_node/Portable-Make.html#Portable-Make">portability guide</a> will help ensure your Makefiles work effectively across systems. Here are <a href="http://zmjones.com/make/">some</a> <a href="http://blog.kaggle.com/2012/10/15/make-for-data-scientists/">examples</a> to <a href="https://web.archive.org/web/20150206054212/http://www.bioinformaticszen.com/post/decomplected-workflows-makefiles/">get started</a>. A number of data folks use <code>make</code> as their tool of choice, including <a href="https://bost.ocks.org/mike/make/">Mike Bostock</a>.</p>
@@ -269,7 +311,13 @@ from src.data import make_dataset
 <li>Run <code>pip freeze &gt; requirements.txt</code> to pin the exact package versions used to recreate the analysis</li>
 <li>If you find you need to install another package, run <code>pip freeze &gt; requirements.txt</code> again and commit the changes to version control.</li>
 </ol>
-<p>If you have more complex requirements for recreating your environment, consider a virtual machine based approach such as <a href="https://www.docker.com/">Docker</a> or <a href="https://www.vagrantup.com/">Vagrant</a>. Both of these tools use text-based formats (Dockerfile and Vagrantfile respectively) you can easily add to source control to describe how to create a virtual machine with the requirements you need.</p>
+<p>If you have more complex requirements for recreating your environment, consider a virtual machine based approach such as <a href="https://www.docker.com/">Docker</a> or <a href="https://www.vagrantup.com/">Vagrant</a>. Both of these tools use text-based formats (Dockerfile and Vagrantfile respectively) you can easily add to source control to describe how to create a virtual machine with the requirements you need. we have set up an initial docker and docker-compose setup for you:</p>
+<ol>
+<li>Ensure you have <a href="">docker</a> and <a href="">docker-compose</a> in your system.</li>
+<li>Run <code>make up</code> to init docker container</li>
+<li>If you are working on notebooks after build you should be able to <a href="http://0.0.0.0:8888">navitage to lab</a></li>
+<li>If you want to enter into the main container; <code>make inside</code></li>
+</ol>
 <h3 id="keep-secrets-and-configuration-out-of-version-control">Keep secrets and configuration out of version control</h3>
 <p>You <em>really</em> don't want to leak your AWS secret key or Postgres username and password on Github. Enough said — see the <a href="http://12factor.net/config">Twelve Factor App</a> principles on this point. Here's one way to do this:</p>
 <h4 id="store-your-secrets-and-config-variables-in-a-special-file">Store your secrets and config variables in a special file</h4>
@@ -427,5 +475,5 @@ aws_secret_access_key=myprojectsecretkey
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2020-12-11 13:48:44.915476+00:00
+Build Date UTC : 2020-12-11 15:22:13.716503+00:00
 -->
