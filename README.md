@@ -102,3 +102,8 @@ or
 ------------
 
     py.test tests
+
+### Setup prehooks and test them
+------------
+
+    pre-commit install && pre-commit run --all-files

@@ -8,8 +8,11 @@ PROJECT_DIRECTORY = os.path.realpath(os.path.curdir)
 def remove_file(filepath):
     os.remove(os.path.join(PROJECT_DIRECTORY, filepath))
 
+
 def remove_dir(filepath):
-    shutil.rmtree(os.path.join(PROJECT_DIRECTORY, filepath), ignore_errors=True, onerror=None)
+    shutil.rmtree(os.path.join(PROJECT_DIRECTORY, filepath),
+                  ignore_errors=True,
+                  onerror=None)
 
 
 if __name__ == '__main__':

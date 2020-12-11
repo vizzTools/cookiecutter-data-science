@@ -11,12 +11,7 @@ def no_curlies(filepath):
     with open(filepath, 'r') as f:
         data = f.read()
 
-    template_strings = [
-        '{{',
-        '}}',
-        '{%',
-        '%}'
-    ]
+    template_strings = ['{{', '}}', '{%', '%}']
 
     template_strings_in_file = [s in data for s in template_strings]
     return not any(template_strings_in_file)
@@ -81,20 +76,11 @@ class TestCookieSetup(object):
 
     def test_folders(self):
         expected_dirs = [
-            'data',
-            'data/processed',
-            'data/raw',
-            'docs',
-            'notebooks',
-            'notebooks/Final',
-            'notebooks/Lab',
-            'notebooks/templates',
-            'tests'
+            'data', 'data/processed', 'data/raw', 'docs', 'notebooks',
+            'notebooks/Final', 'notebooks/Lab', 'notebooks/templates', 'tests'
         ]
 
-        ignored_dirs = [
-            str(self.path)
-        ]
+        ignored_dirs = [str(self.path)]
 
         abs_expected_dirs = [str(self.path / d) for d in expected_dirs]
         abs_dirs, _, _ = list(zip(*os.walk(self.path)))
@@ -105,4 +91,3 @@ class TestCookieSetup(object):
     #     assert self.path.isdir()
     #     run_inside_dir('tox', str(self.path)) == 0
     #     print("test_bake_and_run_tests path", str(result.project))
-

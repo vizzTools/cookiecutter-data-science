@@ -1,2 +1,2 @@
 """Main module."""
-import logging # noqa
+import logging  # noqa
