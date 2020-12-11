@@ -81,10 +81,6 @@ The directory structure of your new project looks like this:
 │   └── Final               <- The final cleaned notebooks for reports/ designers /
 |				               developers etc.
 │
-├── cloudFunctions
-│   ├── name_cloud_function      <- The final, canonical data sets for modeling.
-│   └── raw                      <- The original, immutable data dump.
-│
 ├── airflowDataProject
 │   ├── processed           <- The final, canonical data sets for modeling.
 │   └── raw                 <- The original, immutable data dump.
