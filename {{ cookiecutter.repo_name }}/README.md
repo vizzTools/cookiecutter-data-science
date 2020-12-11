@@ -91,5 +91,5 @@ By default this will treat your project remote branch as `git@github.com:Vizzual
 
 #### Happy coding and science!
 
-
+--------
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
