@@ -63,7 +63,7 @@ Project Organization
 
 ### Install:
 ------------
-#### First setup one of your environment:
+#### First, setup one of your environments
 
 - With [docker]() and [docker-compose]() in your system, you can develop inside containers:
 ``` bash
@@ -83,13 +83,13 @@ make requirements
 make create_environment && make requirements
 ```
 ------------
-#### Second init git and initialize the github pre-hooks:
+#### Second, Init git and initialize the github pre-hooks
 ``` bash
 make init-prehooks
 ```
 By default this will treat your project remote branch as `git@github.com:Vizzuality/{{cookiecutter.repo_name}}` if you need to change it don't forget to modify the `Makefile` before running this command. Take into account that this will create a new repository under the vizzuality organization once you `git push -u origin master`
 
-#### Happy coding!
+#### Happy coding and science!
 
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
