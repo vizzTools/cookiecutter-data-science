@@ -1,4 +1,4 @@
-# Cookiecutter Data Science
+# Cookiecutter Data Science for vizzuality
 
 _A logical, reasonably standardized, but flexible project structure for doing and sharing data science work._
 
@@ -58,7 +58,7 @@ With this in mind, we've created a data science cookiecutter template for projec
 
 ### Requirements
 
- - Python 2.7 or 3.5
+ - Python 2.7 or >=3.5
  - [cookiecutter Python package](http://cookiecutter.readthedocs.org/en/latest/installation.html) >= 1.4.0: `pip install cookiecutter`
 
 
@@ -77,52 +77,96 @@ cookiecutter https://github.com/drivendata/cookiecutter-data-science
 ## Directory structure
 
 ```nohighlight
-├── LICENSE
-├── Makefile           <- Makefile with commands like `make data` or `make train`
-├── README.md          <- The top-level README for developers using this project.
+├── LICENSE                 <- The LICENSE using this project.
+├── README.md               <- The top-level README for developers using this project.
+├── CHANGELOG.md            <- The top-level CHANGELOG for developers using this project.
+├── env.default  			<- Environment vars definition
+├── Makefile           		<- Makefile with commands
+├──.editorconfig			<- Helps maintain consistent coding styles
+├──.pre-commit-config		<- Helps setup github basic precommit hooks
+├── Dockerfile         		<- Docker file definition
+├── docker-compose.yml  	<- Docker configs environment definition
+├── .dockerignore  			<- files don't want to copy inside container
+├── .gitignore  			<- files don't want to copy in githubs
+├── .github  				<- github configs
+│   └── pull_request_template.md <- github pr template
+├── requirements.txt       	<- The requirements for development
+├── setup.cfg   			<- a config file for pytest, flake8 and yapf
+├── setup.py   				<- config file for pip module
+├── docs 					<- A default Sphinx project with support for module autodoc and markdown.
+│   └── __init__.py
+├── test                	<- Test setup folder using pytest, datatest and hypothesis
+│   └── __init__.py
+├── tox.ini            	    <- tox file with settings for running tox;
+|
 ├── data
-│   ├── external       <- Data from third party sources.
-│   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
-│
-├── docs               <- A default Sphinx project; see sphinx-doc.org for details
-│
-├── models             <- Trained and serialized models, model predictions, or model summaries
-│
-├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-│                         the creator's initials, and a short `-` delimited description, e.g.
-│                         `1.0-jqp-initial-data-exploration`.
-│
-├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-│
-├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
-│
-├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-│                         generated with `pip freeze > requirements.txt`
-│
-├── setup.py           <- Make this project pip installable with `pip install -e`
-├── src                <- Source code for use in this project.
-│   ├── __init__.py    <- Makes src a Python module
+│   ├── processed           <- The final, canonical data sets for modeling.
+│   └── raw                 <- The original, immutable data dump.
+|
+├── notebooks               <- Naming convention is a number (for ordering),
+│   │                       the creator's initials, and a short `-` delimited e.g.
+│   │                       `1.0-jqp-initial-data-exploration`.
 │   │
-│   ├── data           <- Scripts to download or generate data
-│   │   └── make_dataset.py
+│   ├──.env
+│   ├──.dockerignore
+│   ├──requirements.txt           <- Notebooks requirements
+│   ├──Dockerfile                 <- Sets up Jupyter notebooks environment
+│   ├──jupyter_notebook_config.py <- Configure Jupyter notebooks
+│   ├── template_notebooks        <- where the notebooks template will live.
 │   │
-│   ├── features       <- Scripts to turn raw data into features for modeling
-│   │   └── build_features.py
+│   ├── Lab                 <- Testing and development
 │   │
-│   ├── models         <- Scripts to train models and then use trained models to make
-│   │   │                 predictions
-│   │   ├── predict_model.py
-│   │   └── train_model.py
-│   │
-│   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-│       └── visualize.py
+│   └── Final               <- The final cleaned notebooks for reports/ designers /
+|				               developers etc.
 │
-└── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
+├── airflowDataProject
+│   ├── processed           <- The final, canonical data sets for modeling.
+│   └── raw                 <- The original, immutable data dump.
+│
+└─ <you project_slug>       <- Source code for use in this project.
+    └── __init__.py         <- Makes src a Python module
+```
+#### First, setup one of your environments
+
+- With [docker]() and [docker-compose]() in your system, you can develop inside containers:
+``` bash
+make up
+```
+And if you want to get into the main container:
+``` bash
+make inside
+```
+------------
+- Install requirements on your machine:
+``` bash
+make requirements
+```
+- Set up a new environment in your machine
+``` bash
+make create_environment && make requirements
+```
+------------
+#### Second, Init git and initialize the github pre-hooks
+``` bash
+make init-prehooks
+```
+By default this will treat your project remote branch as `git@github.com:Vizzuality/{{cookiecutter.repo_name}}` if you need to change it don't forget to modify the `Makefile` before running this command. Take into account that this will create a new repository under the vizzuality organization once you `git push -u origin master`
+
+#### Happy coding and science!
+
+You can run your tests:
+``` bash
+make test
 ```
 
+You can lint and reformat your code:
+``` bash
+make lint
+```
+or up and serve the documentation:
+``` bash
+make serve-doc
+```
 ## Opinions
 
 There are some opinions implicit in the project structure that have grown out of our experience with what works and what doesn't when collaborating on data science projects. Some of the opinions are about workflows, and some of the opinions are about tools that make life easier. Here are some of the beliefs which this project is built on—if you've got thoughts, please [contribute or share them](#contributing).
@@ -135,9 +179,9 @@ Also, if data is immutable, it doesn't need source control in the same way that 
 
 ### Notebooks are for exploration and communication
 
-Notebook packages like the [Jupyter notebook](http://jupyter.org/), [Beaker notebook](http://beakernotebook.com/), [Zeppelin](http://zeppelin-project.org/), and other literate programming tools are very effective for exploratory data analysis. However, these tools can be less effective for reproducing an analysis. When we use notebooks in our work, we often subdivide the `notebooks` folder. For example, `notebooks/exploratory` contains initial explorations, whereas `notebooks/reports` is more polished work that can be exported as html to the `reports` directory.
+Notebook packages like the [Jupyter notebook](http://jupyter.org/), [Beaker notebook](http://beakernotebook.com/), [Zeppelin](http://zeppelin-project.org/), and other literate programming tools are very effective for exploratory data analysis. However, these tools can be less effective for reproducing an analysis. When we use notebooks in our work, we often subdivide the `notebooks` folder. Some basic template to start from can be found at `notebooks/templates`. For example, `notebooks/Lab` contains initial explorations, whereas `notebooks/Final` is more polished work.
 
-Since notebooks are challenging objects for source control (e.g., diffs of the `json` are often not human-readable and merging is near impossible), we recommended not collaborating directly with others on Jupyter notebooks. There are two steps we recommend for using notebooks effectively:
+Since notebooks are challenging objects for source control (e.g., diffs of the `json` are often not human-readable and merging is near impossible), we recommended not collaborating directly with others on Jupyter notebooks and use [`nbdime`](https://nbdime.readthedocs.io/en/latest/) to better handle github. There are also two steps we recommend for using notebooks effectively:
 
  1. Follow a naming convention that shows the owner and the order the analysis was done in. We use the format `<step>-<ghuser>-<description>.ipynb` (e.g., `0.3-bull-visualize-distributions.ipynb`).
 
@@ -152,7 +196,7 @@ Since notebooks are challenging objects for source control (e.g., diffs of the `
 # OPTIONAL: always reload modules so that as you change code in src, it gets loaded
 %autoreload 2
 
-from src.data import make_dataset
+from <project_slug>.<file> import <function>
 ```
 
 ### Analysis is a DAG
@@ -172,7 +216,12 @@ One effective approach to this is use [virtualenv](https://virtualenv.pypa.io/en
  3. Run `pip freeze > requirements.txt` to pin the exact package versions used to recreate the analysis
  4. If you find you need to install another package, run `pip freeze > requirements.txt` again and commit the changes to version control.
 
-If you have more complex requirements for recreating your environment, consider a virtual machine based approach such as [Docker](https://www.docker.com/) or [Vagrant](https://www.vagrantup.com/). Both of these tools use text-based formats (Dockerfile and Vagrantfile respectively) you can easily add to source control to describe how to create a virtual machine with the requirements you need.
+If you have more complex requirements for recreating your environment, consider a virtual machine based approach such as [Docker](https://www.docker.com/) or [Vagrant](https://www.vagrantup.com/). Both of these tools use text-based formats (Dockerfile and Vagrantfile respectively) you can easily add to source control to describe how to create a virtual machine with the requirements you need. we have set up an initial docker and docker-compose setup for you:
+
+1. Ensure you have [docker]() and [docker-compose]() in your system.
+2. Run `make up` to init docker container
+3. If you are working on notebooks after build you should be able to [navitage to lab](http://0.0.0.0:8888)
+4. If you want to enter into the main container; `make inside`
 
 ### Keep secrets and configuration out of version control
 
@@ -237,10 +286,12 @@ If you use the Cookiecutter Data Science project, link back to this page or [giv
 ## Links to related projects and references
 
 Project structure and reproducibility is talked about more in the R research community. Here are some projects and blog posts if you're working in R that may help you out.
-
+ - [cookiecutter-data-science](https://github.com/drivendata/cookiecutter-data-science) as the base for this template.
  - [Project Template](http://projecttemplate.net/index.html) - An R data analysis template
  - "[Designing projects](http://nicercode.github.io/blog/2013-04-05-projects/)" on Nice R Code
  - "[My research workflow](http://www.carlboettiger.info/2012/05/06/research-workflow.html)" on Carlboettiger.info
  - "[A Quick Guide to Organizing Computational Biology Projects](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000424)" in PLOS Computational Biology
+ - [Airflow project template](https://github.com/gilsondev/cookiecutter-airflow) - An R data analysis template
+ - [full-stack-fastapi-postgresql](https://github.com/tiangolo/full-stack-fastapi-postgresql) As a fastapi api setup
 
 Finally, a huge thanks to the [Cookiecutter](https://cookiecutter.readthedocs.org/en/latest/) project ([github](https://github.com/audreyr/cookiecutter)), which is helping us all spend less time thinking about and writing boilerplate and more time getting things done.
