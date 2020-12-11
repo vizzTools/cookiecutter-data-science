@@ -29,8 +29,7 @@ Project Organization
     ├── data
     │   ├── processed      <- The final, canonical data sets for modeling.
     │   └── raw            <- The original, immutable data dump.
-    |
-{% if cookiecutter.notebooks == 'y' %}
+    |{% if cookiecutter.notebooks == 'y' %}
     ├── notebooks           <- Naming convention is a number (for ordering),
     │   │                     the creator's initials, and a short `-` delimited e.g.
     │   │                     `1.0-jqp-initial-data-exploration`.
@@ -42,26 +41,14 @@ Project Organization
     │   │
     │   └── Final            <- The final cleaned notebooks for reports/ designers /
     |				   developers etc.
-    │
-{% endif %}
-{% if cookiecutter.cloud_functions == 'y' %}
-    ├── cloudFunctions
-    │   ├── name_cloud_function      <- The final, canonical data sets for modeling.
-    │   └── raw            <- The original, immutable data dump.
-    │
-{% endif %}
-{% if cookiecutter.airflow_setup == 'y' %}
+    │{% endif %}{% if cookiecutter.airflow_setup == 'y' %}
     ├── airflowDataProject
     │   ├── processed      <- The final, canonical data sets for modeling.
     │   └── raw            <- The original, immutable data dump.
-    │
-{% endif %}
-{% if cookiecutter.module == 'y' %}
+    │{% endif %}{% if cookiecutter.module == 'y' %}
     └─ src                  <- Source code for use in this project.
         └── __init__.py     <- Makes src a Python module
 {% endif %}
-
-
 
 --------
 
