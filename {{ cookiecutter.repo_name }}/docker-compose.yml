@@ -73,3 +73,40 @@ services:
     volumes:
         - .:/home/nodummy/projects/{{cookiecutter.repo_name}}
 {% endif %}
+{% if cookiecutter.airflow_setup == 'y' %}
+  {{ cookiecutter.repo_name }}-postgres:
+    image: postgres
+    environment:
+        - POSTGRES_USER=airflow
+        - POSTGRES_PASSWORD=airflow
+        - POSTGRES_DB=airflow
+  {{ cookiecutter.repo_name }}-scheduler:
+    image: apache/airflow
+    command: scheduler
+    restart_policy:
+        condition: on-failure
+    depends_on:
+        - {{ cookiecutter.repo_name }}-postgres
+    env_file:
+        - .env
+    volumes:
+        - ./airflow/dags:/opt/airflow/dags
+        - ./airflow/logs:/opt/airflow/logs
+  {{ cookiecutter.repo_name }}-webserver:
+    image: apache/airflow
+    entrypoint: ./scripts/entrypoint.sh
+    restart_policy:
+        condition: on-failure
+    depends_on:
+        - {{ cookiecutter.repo_name }}-postgres
+        - {{ cookiecutter.repo_name }}-scheduler
+    env_file:
+        - .env
+    volumes:
+        - ./airflow/dags:/opt/airflow/dags
+        - ./airflow/logs:/opt/airflow/logs
+        - ./airflow/scripts:/opt/airflow/scripts
+    ports:
+        - "8080:8080"
+
+{% endif %}
