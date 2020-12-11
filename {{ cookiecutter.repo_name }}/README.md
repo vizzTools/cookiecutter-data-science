@@ -91,5 +91,19 @@ By default this will treat your project remote branch as `git@github.com:Vizzual
 
 #### Happy coding and science!
 
+You can run your tests:
+``` bash
+make test
+```
+
+You can lint and reformat your code:
+``` bash
+make lint
+```
+or up and serve the documentation:
+``` bash
+make serve-doc
+```
+
 --------
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
