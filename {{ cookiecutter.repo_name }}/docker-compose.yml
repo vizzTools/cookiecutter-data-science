@@ -94,7 +94,7 @@ services:
   {{ cookiecutter.repo_name }}-webserver:
     container_name: {{ cookiecutter.repo_name }}-webserver
     image: apache/airflow
-    entrypoint: ./scripts/entrypoint.sh
+    entrypoint: ['sh','./scripts/entrypoint.sh']
     depends_on:
         - {{ cookiecutter.repo_name }}-postgres
         - {{ cookiecutter.repo_name }}-scheduler
