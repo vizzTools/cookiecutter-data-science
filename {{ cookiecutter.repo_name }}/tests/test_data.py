@@ -13,7 +13,6 @@ import datatest as dt
 from hypothesis import given, example, assume
 import hypothesis.strategies as st
 from math import isnan #to remove nan from test
-from hypothesis_geojson import features
 
 
 @pytest.fixture(scope='module')
@@ -165,7 +164,177 @@ def test_substraction(s1, s2):
 
 #hypothesis for geojsons
 
+@st.composite
+def positions(draw, dims=2):
+    """
+    https://tools.ietf.org/html/rfc7946#section-3.1.1
+    Questions
+    ---------
+    * should the elevation/altitude component be bounded?
+    * is it valid to mix dimensionality of positions within a geometry?
+    """
+    if dims is None:
+        dims = draw(st.sampled_from([2, 3]))
 
+    if dims == 2:
+        pos = draw(
+            st.tuples(
+                st.floats(min_value=-180, max_value=180, allow_nan=False, allow_infinity=False),
+                st.floats(min_value=-90, max_value=90, allow_nan=False, allow_infinity=False)))
+    elif dims == 3:
+        pos = draw(
+            st.tuples(
+                st.floats(min_value=-180, max_value=180, allow_nan=False, allow_infinity=False),
+                st.floats(min_value=-90, max_value=90, allow_nan=False, allow_infinity=False),
+                st.floats(allow_nan=False, allow_infinity=False)))
+    else:
+        raise ValueError("Position must be 2 or 3 dims")
+
+    return pos
+
+
+@st.composite
+def bboxes(draw, dims=2):
+    """
+    https://tools.ietf.org/html/rfc7946#section-5
+    """
+    if dims is None:
+        dims = draw(st.sampled_from([2, 3]))
+
+    # Use 3 dim positions even if we only need 2
+    pos1 = draw(positions(dims=3))
+    pos2 = draw(positions(dims=3))
+    lons, lats, zs = zip(pos1, pos2)
+
+    if dims == 2:
+        bbox = (min(lons), min(lats), max(lons), max(lats))
+    elif dims == 3:
+        bbox = (min(lons), min(lats), min(zs), max(lons), max(lats), max(zs))
+    else:
+        raise ValueError("dims must be 2 or 3")
+
+    return bbox
+
+
+@st.composite
+def linestrings(draw):
+    """
+    https://tools.ietf.org/html/rfc7946#section-3.1.4
+    """
+    return draw(st.lists(positions(), min_size=2))
+
+
+@st.composite
+def linear_rings(draw, assert_validity=False):
+    """
+    https://tools.ietf.org/html/rfc7946#section-3.1.6
+    """
+    coords = draw(st.lists(positions(), min_size=4))
+    coords.append(coords[0])
+    if assert_validity:
+        raise NotImplementedError('assert_validity not available yet')
+    return coords
+
+
+@st.composite
+def geometries(draw, geom_types=None):
+    """
+    Questions
+    ---------
+    * When coordinates are composed of arrays of something,
+    can those arrays be empty? Assume NO here (e.g.,
+    MultiPoint is an array of *at least one* position.)
+    * Need to add bbox and foreign members
+    """
+    if geom_types is None:
+        # default to all
+        geom_types = [
+            'Point', 'LineString', 'Polygon',
+            'MultiPoint', 'MultiLineString', 'MultiPolygon']
+
+    geom_type = draw(st.sampled_from(geom_types))
+
+    if geom_type == 'Point':
+        coords = draw(positions())
+    elif geom_type == 'LineString':
+        coords = draw(linestrings())
+    elif geom_type == 'Polygon':
+        coords = draw(st.lists(linear_rings(), min_size=1))
+    elif geom_type == 'MultiPoint':
+        coords = draw(st.lists(positions(), min_size=1))
+    elif geom_type == 'MultiLineString':
+        coords = draw(st.lists(linestrings(), min_size=1))
+    elif geom_type == 'MultiPolygon':
+        coords = draw(st.lists(st.lists(linear_rings(), min_size=1), min_size=1))
+    else:
+        raise NotImplementedError(geom_type)
+
+    return {
+        'type': geom_type,
+        'coordinates': coords}
+
+
+@st.composite
+def geometry_collection(draw):
+    """
+    To Do
+    -----
+    * bbox and foreign members
+    """
+    geoms = draw(st.lists(geometries()))  # can be empty
+    assume(len(geoms) != 1)  # avoid single geom
+    return {
+        'type': 'GeometryCollection',
+        'geometries': geoms}
+
+
+@st.composite
+def properties(draw):
+    return draw(st.dictionaries(
+        keys=st.one_of(st.text(), st.integers()),
+        values=st.one_of(
+            st.text(),
+            st.integers(),
+            st.floats(allow_nan=False, allow_infinity=False),
+            st.none())))
+
+
+@st.composite
+def features(draw):
+    feature = {
+        'type': 'Feature',
+        'geometry': draw(st.one_of(geometries(), geometry_collection(), st.none())),
+        'properties': draw(st.one_of(properties(), st.none()))}
+
+    if draw(st.booleans()):
+        feature['id'] = draw(st.one_of(
+            st.integers(), st.text(), st.floats(allow_nan=False, allow_infinity=False)))
+
+    if draw(st.booleans()):
+        feature['bbox'] = draw(bboxes())
+
+    # foreign members
+    if draw(st.booleans()):
+        key = draw(st.one_of(
+            st.integers(), st.text(), st.floats(allow_nan=False, allow_infinity=False)))
+        value = draw(st.one_of(
+            st.integers(), st.text(), st.none(), st.floats(allow_nan=False, allow_infinity=False)))
+        feature[key] = value
+
+    return feature
+
+
+# @st.composite
+# def feature_collection(draw):
+#     """
+#     To do
+#     -----
+#     Foreign Members and bbox
+#     """
+#     features = draw(st.lists(features()))
+#     return {
+#         'type': 'FeatureCollection',
+#         'features': features}
 
 def find_name(feature):
     """This function checks a geojson-like feature
