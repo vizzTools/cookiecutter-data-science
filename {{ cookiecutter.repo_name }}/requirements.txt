@@ -27,3 +27,4 @@ pre-commit
 pandas
 datatest
 hypothesis
+black
