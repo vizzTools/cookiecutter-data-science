@@ -52,7 +52,7 @@ RUN conda update -n base conda && conda install -c conda-forge \
             xhistogram \
             lz4 \
             nomkl \
-            dask-labextension==3.0 \
+            dask-labextension==5.0 \
             python-graphviz \
             tini==0.18.0 \
             xarray=0.16.1
@@ -63,7 +63,6 @@ RUN jupyter contrib nbextension install --sys-prefix && \
                 jupyter nbextension install --sys-prefix --py vega && \
                 jupyter nbextension enable vega --py --sys-prefix &&  \
                 jupyter nbextension enable --py --sys-prefix ipyleaflet && \
-                jupyter labextension install @jupyter-widgets/jupyterlab-manager dask-labextension@2.0.2 && \
                 jupyter labextension install jupyterlab_templates &&\
                 jupyter serverextension enable --py jupyterlab_templates
 
