@@ -26,3 +26,5 @@ pre-commit
 # external tools requirements
 pandas
 datatest
+hypothesis
+black

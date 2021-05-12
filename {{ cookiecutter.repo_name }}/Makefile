@@ -45,6 +45,9 @@ lint:
 ## Run your code tests using tox
 test:
 	tox
+## Run hypothesis ghostwritting
+test_ghostwritting:
+	hypothesis write test_ghostwritting --style:pytest
 ## Install Python Dependencies in your local if you dont want to use docker
 requirements: test_environment
 	python3 -m pip install -U pip setuptools wheel
