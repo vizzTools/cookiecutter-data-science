@@ -24,5 +24,5 @@ python-dotenv>=0.5.1
 pre-commit
 
 # external tools requirements
-pandas
-datatest
+pandas>=1.2.4
+datatest>=1.5.0
